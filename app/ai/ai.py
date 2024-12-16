@@ -10,11 +10,12 @@ class KerekAi:
     """
 
     def __init__(self):
-        with open("model.pkl", "rb") as file:
+
+        with open("app/ai/model.pkl", "rb") as file:
             self.model = pickle.load(file)
             file.close()
 
-        with open("preprocessor.pkl", "rb") as file:
+        with open("app/ai/preprocessor.pkl", "rb") as file:
             self.preprocessor = pickle.load(file)
             file.close()
 
@@ -27,7 +28,7 @@ class KerekAi:
         Returns:
             bool: True if the vehicle is safe else False
         """
-        df = pd.DataFrame([vehicle])
+        df = pd.DataFrame([dict(vehicle)])
 
         x_vehicle = self.preprocessor.transform(df)
         vehicle_anomaly_score = self.model.predict(x_vehicle)

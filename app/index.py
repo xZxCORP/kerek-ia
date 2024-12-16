@@ -1,11 +1,14 @@
 import traceback
 
+from ai import KerekAi
 from fastapi import FastAPI
 
 from service.kerek import KerekEngine
 from dto import Vehicle
 
 api = FastAPI()
+# Load the ai at start
+ai = KerekAi()
 
 
 @api.get("/status")
@@ -28,7 +31,7 @@ def predict_anomaly(vehicle: Vehicle):
     """
 
     try:
-        output = KerekEngine(vehicle).execute()
+        output = KerekEngine(vehicle, ai).execute()
 
         return output
     except Exception as e:

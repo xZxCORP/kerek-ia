@@ -7,12 +7,12 @@ class KerekEngine:
     The Kerek ai
     """
 
-    def __init__(self, vehicle: Vehicle):
+    def __init__(self, vehicle: Vehicle, ai: KerekAi):
         self.vehicle = vehicle
         self.reason = "Ce véhicule n'est pas dans les normes."
+        self.ai = ai
 
     def execute(self):
-        ai = KerekAi()
-        is_safe = ai.execute(self.vehicle)
+        is_safe = self.ai.execute(self.vehicle)
 
         return None if is_safe else self.reason
