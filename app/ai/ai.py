@@ -28,8 +28,10 @@ class KerekAi:
         Returns:
             bool: True if the vehicle is safe else False
         """
-        df = pd.DataFrame([dict(vehicle)])
-
+        full_vehicle = dict(vehicle)
+        full_vehicle["owners_per_year"] = full_vehicle['owners'] / max(1, 2024 - row['year']
+        full_vehicle["mileage_per_year"] = full_vehicle['mileage'] / max(1, 2024 - row['year']
+                                                                         
         x_vehicle = self.preprocessor.transform(df)
         vehicle_anomaly_score = self.model.predict(x_vehicle)
 
