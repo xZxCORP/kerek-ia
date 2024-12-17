@@ -1,0 +1,13 @@
+services:
+  kerek_api:
+    build: .
+    ports:
+      - "4001:80"
+    volumes:
+      - ./app:/code/app
+    networks:
+      - wheelz-app
+
+networks:
+  wheelz-app:
+    external: true
