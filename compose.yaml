@@ -2,7 +2,7 @@ services:
   kerek_api:
     build: .
     ports:
-      - "4001:80"
+      - "4030:80"
     volumes:
       - ./app:/code/app
     networks:
