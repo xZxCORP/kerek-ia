@@ -79,7 +79,7 @@ def predict_anomaly(vehicle: Vehicle):
     """
 
     try:
-        output = KerekEngine(ai, vehicle).execute()
+        output = KerekEngine(ai, vehicle).execute()["reason"]
 
         return output
     except Exception as e:
