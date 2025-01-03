@@ -3,7 +3,6 @@ import traceback
 from ai import KerekAi
 from fastapi import FastAPI
 
-
 from service.kerek import KerekEngine
 from dto import Vehicle
 
