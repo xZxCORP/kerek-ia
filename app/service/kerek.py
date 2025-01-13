@@ -1,6 +1,7 @@
-from typing import Literal, Union
-from dto import Vehicle
+from typing import Literal, Optional, Union
+from dto import PartialVehicle, Vehicle
 from ai import KerekAi
+from datetime import datetime
 
 
 class KerekEngine:
@@ -9,13 +10,13 @@ class KerekEngine:
     """
 
     MEAN_MILEAGE_PER_YEAR = 21000
-    CURR_YEAR = 2025
+    CURR_YEAR = datetime.now().year
 
     def __init__(
         self,
         ai: KerekAi,
-        vehicle: Vehicle,
-        last_vehicle: Union[Vehicle, None] = None,
+        vehicle: Union[Vehicle, PartialVehicle],
+        last_vehicle: Optional[Vehicle] = None,
         objective: Literal["compare", "analyze"] = "analyze",
     ):
         self.vehicle = vehicle
@@ -39,17 +40,23 @@ class KerekEngine:
         return output
 
     def _compare(self):
-        difference_mileage = self.vehicle.mileage - self.last_vehicle.mileage
-        difference_years = self.vehicle.year - self.CURR_YEAR
+        compare_mileage = True if self.vehicle.mileage is not None else False
+        compare_years = True if self.vehicle.year is not None else False
+        compare_owners = True if self.vehicle.owners is not None else False
 
-        # Lower mileage than before
-        if difference_mileage < 0:
-            return False
-        # More than the mean mileage
-        if difference_mileage > self.MEAN_MILEAGE_PER_YEAR * difference_years:
-            return False
-        # Less owners than before
-        if self.vehicle.owners < self.last_vehicle.owners:
-            return False
+        if compare_mileage:
+            difference_mileage = self.vehicle.mileage - self.last_vehicle.mileage
+            # Lower mileage than before
+            if difference_mileage < 0:
+                return False
+            if compare_years:
+                difference_years = self.vehicle.year - self.CURR_YEAR
+                # More than the mean mileage
+                if difference_mileage > self.MEAN_MILEAGE_PER_YEAR * difference_years:
+                    return False
+        if compare_owners:
+            # Less owners than before
+            if self.vehicle.owners < self.last_vehicle.owners:
+                return False
 
         return True

@@ -4,7 +4,7 @@ from ai import KerekAi
 from fastapi import FastAPI
 
 from service.kerek import KerekEngine
-from dto import Vehicle
+from dto import Vehicle, PartialVehicle
 
 api = FastAPI()
 # Load the ai at start
@@ -40,7 +40,7 @@ def predict_analyze(vehicle: Vehicle):
 
 
 @api.post("/predict/compare")
-def predict_compare(vehicle: Vehicle, last_vehicle: Vehicle):
+def predict_compare(vehicle: PartialVehicle, last_vehicle: Vehicle):
     """_summary_
 
     Args:
@@ -55,30 +55,6 @@ def predict_compare(vehicle: Vehicle, last_vehicle: Vehicle):
 
     try:
         output = KerekEngine(ai, vehicle, last_vehicle, "compare").execute()
-
-        return output
-    except Exception as e:
-        traceback.print_exc(e)
-        raise e
-
-
-# To remove next patch
-@api.post("/predict")
-def predict_anomaly(vehicle: Vehicle):
-    """_summary_
-
-    Args:
-        vehicle (Vehicle)
-
-    Raises:
-        e: error
-
-    Returns:
-        _type_: string or null
-    """
-
-    try:
-        output = KerekEngine(ai, vehicle).execute()["reason"]
 
         return output
     except Exception as e:
