@@ -19,8 +19,8 @@ class PartialVehicle(BaseModel):
     Vehicle Dto to analyze
     """
 
-    year: Optional[int]
-    owners: Optional[int]
-    mileage: Optional[int]
-    mark: Optional[str]
-    model: Optional[str]
+    year: Optional[int] = None
+    owners: Optional[int] = None
+    mileage: Optional[int] = None
+    mark: Optional[str] = None
+    model: Optional[str] = None

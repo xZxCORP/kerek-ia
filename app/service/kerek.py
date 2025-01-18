@@ -31,10 +31,11 @@ class KerekEngine:
         Returns:
             _type_: _description_
         """
-        is_safe = self.ai.execute(self.vehicle)
 
         if self.objective == "compare":
             is_safe = self._compare()
+        else:
+            is_safe = self.ai.execute(self.vehicle)
 
         output = {"anomaly": not is_safe, "reason": None if is_safe else self.reason}
         return output
@@ -46,6 +47,7 @@ class KerekEngine:
 
         if compare_mileage:
             difference_mileage = self.vehicle.mileage - self.last_vehicle.mileage
+            print(difference_mileage)
             # Lower mileage than before
             if difference_mileage < 0:
                 return False
